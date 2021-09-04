@@ -1,0 +1,7 @@
+sno,firstName,lastName,email,dayOfBirth,type
+1,test,user,test@user.com,2001-01-01,success
+2,t,user,test@user.com,2001-01-01,failure_firstName
+3,test,u,test@user.com,2001-01-01,failure_secondName
+4,test,user,test@user,2001-01-01,failure_email
+5,test,user,test@user.com,2021-12-01,failure_dayOfBirth
+6,t,u,test@user.com,2001-01-01,failure_all

@@ -1,4 +1,4 @@
-package java.Utils;
+package utility;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -15,9 +15,9 @@ public class BaseApi {
     private RequestSpecBuilder specBuilder;
 
     public BaseApi() {
-        this.httpsRequest = Constants.isHttpsRequired;
-        this.baseUri = Constants.Host;
-        this.port = Constants.Port;
+        this.httpsRequest = ConstantsUtil.isHttpsRequired;
+        this.baseUri = ConstantsUtil.Host;
+        this.port = ConstantsUtil.Port;
         this.specBuilder = new RequestSpecBuilder();
     }
 

@@ -1,15 +1,14 @@
-package java.helper;
+package utility;
 
-import java.Utils.BaseApi;
 import java.util.Map;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.springframework.util.CollectionUtils;
 
-public class GenericApiHelper {
+public class ApiHelperUtil {
 
     public static Response invokeApi(String basePath, BaseApi.HTTP_METHOD httpMethod, Map<String, String> headers,
-                                     Map<String, Object> params, Object requestDTO) {
+                                     Map<String, String> params, Object requestDTO) {
 
         BaseApi baseApi = new BaseApi();
         // Set the Request Method
@@ -20,7 +19,7 @@ public class GenericApiHelper {
         baseApi.getSpecBuilder().setBasePath(basePath);
         // set parameters
         if (!CollectionUtils.isEmpty(params)) {
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
+            for (Map.Entry<String, String> entry : params.entrySet()) {
                 baseApi.getSpecBuilder().addParam(entry.getKey(), entry.getValue());
             }
         }
