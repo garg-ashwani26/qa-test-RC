@@ -1,5 +1,6 @@
 package utility;
 
+import model.dbResult;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,7 +25,7 @@ public class DBUtility {
     public void derbyCreateTable() {
         connection = derbyGetConnection();
         try {
-            String sqlCreateDBTable = "Create table records(id int," +
+            String sqlCreateDBTable = "CREATE TABLE records(id int," +
                     "firstName varchar(15)," +
                     "lastName varchar(30)," +
                     "email varchar(100) UNIQUE," +
@@ -45,9 +46,10 @@ public class DBUtility {
             try {
                 Statement statement = connection.createStatement();
                 for (Map<String, String> singleRecord : dataList) {
-                    String sqlInsertData = "Insert into records values(" + singleRecord.get("id") +
-                            singleRecord.get("firstName") + singleRecord.get("lastName") +
-                            singleRecord.get("email") + singleRecord.get("dayOfBirth") + ")";
+                    String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
+                            "values(" + singleRecord.get("id") + ",'" +
+                            singleRecord.get("firstName") + "','" + singleRecord.get("lastName") + "','" +
+                            singleRecord.get("email") + "','" + singleRecord.get("dayOfBirth") + "')";
                     int row = statement.executeUpdate(sqlInsertData);
                     if (row > 0) {
                         System.out.println("A record has been created in Records Table");
@@ -60,17 +62,45 @@ public class DBUtility {
         }
     }
 
-    public void derbyFetchData() {
+    public ArrayList<dbResult> derbyFetchData() {
         connection = derbyGetConnection();
+        ArrayList<dbResult> resultList = new ArrayList();
+        ResultSet resultSet = null;
         try {
             Statement statement = connection.createStatement();
-            String sqlFetchData = "Select * from records";
-            ResultSet resultSet = statement.executeQuery(sqlFetchData);
-            resultSet.first();
-            System.out.println(resultSet.getInt("id") + resultSet.getString("firstName"));
+            String sqlFetchData = "SELECT * FROM records";
+            resultSet = statement.executeQuery(sqlFetchData);
+            while(resultSet.next())
+            {
+                resultList.add(new dbResult(resultSet.getInt("id"), resultSet.getString("firstName"),
+                        resultSet.getString("lastName"), resultSet.getString("email"),
+                        resultSet.getDate("dayOfBirth")));
+            }
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return resultList;
+    }
+
+    public ArrayList<dbResult> derbyFetchDataWithCondition(String queryCondition) {
+        connection = derbyGetConnection();
+        ArrayList<dbResult> resultList = new ArrayList();
+        ResultSet resultSet = null;
+        try {
+            Statement statement = connection.createStatement();
+            String sqlFetchData = "SELECT * FROM records " + queryCondition;
+            resultSet = statement.executeQuery(sqlFetchData);
+            while(resultSet.next())
+            {
+                resultList.add(new dbResult(resultSet.getInt("id"), resultSet.getString("firstName"),
+                        resultSet.getString("lastName"), resultSet.getString("email"),
+                        resultSet.getDate("dayOfBirth")));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
     }
 }

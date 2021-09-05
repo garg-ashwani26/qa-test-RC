@@ -6,7 +6,7 @@
     <test name="Fetch All Users">
         <classes>
             <class name="BaseTest"/>
-            <class name="findalluser.FindAllUsers"/>
+            <class name="findalluser.FindAllUsersTest"/>
         </classes>
     </test>
 

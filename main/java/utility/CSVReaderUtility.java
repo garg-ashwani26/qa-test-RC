@@ -29,11 +29,11 @@ public class CSVReaderUtility {
             while ((line = br.readLine()) != null) {
                 if(lineCounter == 0)
                 {
-                    columnNameList = Arrays.asList(line.split(","));
+                    columnNameList = Arrays.asList(line.split(";"));
                     lineCounter++;
                     continue;
                 }
-                String[] values = line.split(",");
+                String[] values = line.split(";");
                 for(int i = 1; i < columnNameList.size(); i++)
                 {
                     mapRowData.put((String) columnNameList.get(i), values[i]);

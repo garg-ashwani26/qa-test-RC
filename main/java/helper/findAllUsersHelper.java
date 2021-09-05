@@ -13,18 +13,19 @@ public class findAllUsersHelper {
         ObjectMapper mapper = new ObjectMapper();
         try {
             findAllUsersDto = mapper.readValue(response, FindAllUsers.class);
-        }catch (JsonMappingException exp)
+        }catch (JsonMappingException e)
         {
-            System.out.println("Json Mapping Exception: " + exp);
-        }catch (JsonProcessingException exp)
+            e.printStackTrace();
+        }catch (JsonProcessingException e)
         {
-            System.out.println("Json Processing Exception: " + exp);
+            e.printStackTrace();
         }
     }
 
 
-    public FindAllUsers getResponseData()
+    public FindAllUsers getResponseDto()
     {
         return findAllUsersDto;
     }
+
 }

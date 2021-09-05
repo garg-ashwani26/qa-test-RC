@@ -1,20 +1,49 @@
 package findalluser;
 
-import helper.findAllUsersHelper;
 import io.restassured.response.Response;
-import model.response.findallusers.FindAllUsers;
-import utility.ApiHelperUtil;
+import model.dbResult;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import utility.BaseApi;
+import java.util.*;
 
-import java.util.Map;
+public class FindAllUsersTest {
 
-public class FindAllUsersTest{
+    HashMap<String, String> headers = new HashMap();
+    HashMap<String, String> params = new HashMap();
+    String basePath;
 
-    public FindAllUsers apiInvokeAndValidate(String basePath, BaseApi.HTTP_METHOD httpMethod, Map<String, String> headers,
-                                             Map<String, String> params, Object requestDTO)
+    @BeforeMethod
+    public void initialize()
     {
-        Response response = ApiHelperUtil.invokeApi(basePath, httpMethod, headers, params, requestDTO);
-        findAllUsersHelper helper = new findAllUsersHelper(response.asString());
-        return helper.getResponseData();
+        headers.putAll(headersList());
+        basePath = "/api/users";
     }
+
+    @Test(dataProvider = "FindAllUsersAPIData", dataProviderClass = FindAllUsersDataProvider.class)
+    public void testFindAllUsersValid(LinkedHashMap<String, String> params){
+
+        FindAllUsersTestHelper helper = new FindAllUsersTestHelper();
+        ArrayList<dbResult> dbResultList= helper.fetchDbData(params);
+
+        Set<String> keys = params.keySet();
+        for(String key : keys){
+            if(params.get(key) != "NA")
+            params.put(key, params.get(key));
+        }
+
+         Response apiResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
+                BaseApi.HTTP_METHOD.GET, headers, params, null);
+
+        new FindAllUserAssertion().assertAPIResponseValid(apiResponse, dbResultList);
+    }
+
+    Map<String, String> headersList()
+    {
+        HashMap<String, String> headers = new HashMap();
+        headers.put("content-type", "application/json");
+        return headers;
+    }
+
+
 }

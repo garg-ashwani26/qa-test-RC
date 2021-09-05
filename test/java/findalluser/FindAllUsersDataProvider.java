@@ -17,7 +17,10 @@ public class FindAllUsersDataProvider {
         Collection<Object[]> iterableObject = new ArrayList<>();
         for(Map<String,String> map:CSVReaderUtility.csvReader(fileName))
         {
-            iterableObject.add(new Object[]{map});
+            if(map.get("testname").equals(method.getName())) {
+                map.remove("testname");
+                iterableObject.add(new Object[]{map});
+            }
         }
         return iterableObject.iterator();
     }
