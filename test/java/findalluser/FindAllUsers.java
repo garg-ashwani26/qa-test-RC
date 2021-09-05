@@ -19,8 +19,8 @@ public class FindAllUsers{
     }
 
     @Test(dataProvider = "FindAllUsersAPIData", dataProviderClass = FindAllUsersDataProvider.class)
-    public void testFindAllUsers(LinkedHashMap<String, String> params){
-        
+    public void testFindAllUsersValid(LinkedHashMap<String, String> params){
+
         Set<String> keys = params.keySet();
         for(String key : keys){
             if(params.get(key) != "NA")

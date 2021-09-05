@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class findAllUsers {
+public class FindAllUsers {
 
     private List<Link> links = null;
     private List<Content> content = null;

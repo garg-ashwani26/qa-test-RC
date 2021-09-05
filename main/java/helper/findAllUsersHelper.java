@@ -3,16 +3,16 @@ package helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.response.findallusers.findAllUsers;
+import model.response.findallusers.FindAllUsers;
 
 public class findAllUsersHelper {
 
-     findAllUsers findAllUsersDto;
+     FindAllUsers findAllUsersDto;
 
     public findAllUsersHelper(String response) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            findAllUsersDto = mapper.readValue(response, findAllUsers.class);
+            findAllUsersDto = mapper.readValue(response, FindAllUsers.class);
         }catch (JsonMappingException exp)
         {
             System.out.println("Json Mapping Exception: " + exp);
@@ -22,8 +22,9 @@ public class findAllUsersHelper {
         }
     }
 
-    public void testMethod()
+
+    public FindAllUsers getResponseData()
     {
-        System.out.println("Printing values: " + findAllUsersDto.getContent());
+        return findAllUsersDto;
     }
 }

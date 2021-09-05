@@ -3,15 +3,17 @@ package findalluser;
 import org.testng.annotations.DataProvider;
 import utility.CSVReaderUtility;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 
 public class FindAllUsersDataProvider {
 
     @DataProvider(name = "FindAllUsersAPIData")
-    public Iterator<Object[]> findAllUsersDataProvider()
+    public Iterator<Object[]> findAllUsersDataProvider(Method method)
     {
         String fileName = "findAllUsersData.csv";
+        System.out.println(method.getName());
         Collection<Object[]> iterableObject = new ArrayList<>();
         for(Map<String,String> map:CSVReaderUtility.csvReader(fileName))
         {
