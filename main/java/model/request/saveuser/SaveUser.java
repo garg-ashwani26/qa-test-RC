@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class saveUser {
+public class SaveUser {
     private String dayOfBirth;
     private String email;
     private String firstName;

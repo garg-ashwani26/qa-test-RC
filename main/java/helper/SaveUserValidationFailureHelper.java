@@ -3,16 +3,16 @@ package helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.response.findallusers.FindAllUsers;
+import model.response.saveuservalidationfailure.SaveUserValidationFailure;
 
-public class findAllUsersHelper {
+public class SaveUserValidationFailureHelper {
 
-     FindAllUsers findAllUsersDto;
+    SaveUserValidationFailure saveUserValidationFailureDto;
 
-    public findAllUsersHelper(String response) {
+    public SaveUserValidationFailureHelper(String response) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            findAllUsersDto = mapper.readValue(response, FindAllUsers.class);
+            saveUserValidationFailureDto = mapper.readValue(response, SaveUserValidationFailure.class);
         }catch (JsonMappingException e)
         {
             e.printStackTrace();
@@ -23,9 +23,8 @@ public class findAllUsersHelper {
     }
 
 
-    public FindAllUsers getResponseDto()
+    public SaveUserValidationFailure getResponseDto()
     {
-        return findAllUsersDto;
+        return saveUserValidationFailureDto;
     }
-
 }

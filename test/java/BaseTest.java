@@ -1,4 +1,4 @@
-import helper.findAllUsersHelper;
+import helper.FindAllUsersHelper;
 import io.restassured.response.Response;
 import model.response.findallusers.Content;
 import model.response.findallusers.FindAllUsers;
@@ -27,7 +27,7 @@ public class BaseTest {
 //        FindAllUsers findAllUsersResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
 //                BaseApi.HTTP_METHOD.GET, headers, params, null);
         Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.GET, headers, params, null);
-        findAllUsersHelper helper = new findAllUsersHelper(response.asString());
+        FindAllUsersHelper helper = new FindAllUsersHelper(response.asString());
         FindAllUsers findAllUsersResponse =  helper.getResponseDto();
 
         for(Content content : findAllUsersResponse.getContent())

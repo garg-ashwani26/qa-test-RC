@@ -1,17 +1,12 @@
 package findalluser;
 
-import helper.findAllUsersHelper;
 import io.restassured.response.Response;
 import model.dbResult;
 import utility.ApiHelperUtil;
 import utility.BaseApi;
 import utility.DBUtility;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FindAllUsersTestHelper {
 
@@ -25,6 +20,7 @@ public class FindAllUsersTestHelper {
     {
         return new DBUtility().derbyFetchData();
     }
+
 
     ArrayList<dbResult> fetchDbData(LinkedHashMap<String, String> params)
     {
@@ -44,7 +40,8 @@ public class FindAllUsersTestHelper {
         List<String> conditionList = new ArrayList<>();
         String whereCondition = "";
 
-        String offsetCondition = params.get("page").equals("0") && !params.get("size").equals("NA") ?
+        String offsetCondition = params.get("page").equals("0") && params.get("size").equals("0") ?
+                " OFFSET 0 ROWS" : params.get("page").equals("0") && !params.get("size").equals("NA") ?
                 " OFFSET 0 ROWS" : params.get("page").equals("0") && params.get("size").equals("NA") ?
                 " OFFSET 0 ROWS" : !params.get("page").equals("NA") && !params.get("size").equals("NA") ?
                 " OFFSET " + Integer.parseInt(params.get("page"))*Integer.parseInt(params.get("size")) + " ROWS" :
@@ -52,7 +49,8 @@ public class FindAllUsersTestHelper {
                 " OFFSET " + (Integer.parseInt(params.get("page")) * 20 + 1) + " ROWS":
                         params.get("page").equals("NA") && !params.get("size").equals("NA") ? " OFFSET 0 ROWS" : null;
 
-        String sizeCondition = !params.get("size").equals("NA") ? " FETCH NEXT " + params.get("size") + " ROWS ONLY"
+        String sizeCondition = params.get("page").equals("0") && params.get("size").equals("0") ?
+                null : !params.get("size").equals("NA") ? " FETCH NEXT " + params.get("size") + " ROWS ONLY"
                 : null;
 
         String sortCondition = !params.get("sort").equals("NA") ? "ORDER BY " + params.get("sort").replace(","," ") :
@@ -72,5 +70,30 @@ public class FindAllUsersTestHelper {
         return whereCondition;
     }
 
+    public HashMap<String,String> getParamsMap(HashMap<String,String> paramsData)
+    {
+        HashMap<String, String> params = new HashMap();
+        Set<String> keys = paramsData.keySet();
+        for(String key : keys){
+            if(!paramsData.get(key).equals("NA")){
+                params.put(key, paramsData.get(key));}
+        }
+        System.out.println("API Request Parameters" + params);
+        return params;
+    }
+
+    public HashMap<String,String> getParamsMapInvalid(HashMap<String,String> paramsData)
+    {
+        //HashMap<String, String> params = new HashMap();
+        int lastID = new DBUtility().derbyFetchLastID();
+        paramsData.replace("Page",String.valueOf(((int)lastID/20) + 1));
+        paramsData = getParamsMap(paramsData);
+        return paramsData;
+    }
+
+    public int dbFetchLastID()
+    {
+        return new DBUtility().derbyFetchLastID();
+    }
 
 }

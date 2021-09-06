@@ -21,23 +21,44 @@ public class FindAllUsersTest {
     }
 
     @Test(dataProvider = "FindAllUsersAPIData", dataProviderClass = FindAllUsersDataProvider.class)
-    public void testFindAllUsersValid(LinkedHashMap<String, String> params){
+    public void testFindAllUsersValid(LinkedHashMap<String, String> paramsData){
 
         FindAllUsersTestHelper helper = new FindAllUsersTestHelper();
-        ArrayList<dbResult> dbResultList= helper.fetchDbData(params);
+        ArrayList<dbResult> dbResultList= helper.fetchDbData(paramsData);
 
-        Set<String> keys = params.keySet();
-        for(String key : keys){
-            if(params.get(key) != "NA")
-            params.put(key, params.get(key));
-        }
+        //Get only required request parameters from available list
+        params = helper.getParamsMap(paramsData);
 
+        //Make API Call and get Response object
          Response apiResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
                 BaseApi.HTTP_METHOD.GET, headers, params, null);
 
+        //API Response Assertion
         new FindAllUserAssertion().assertAPIResponseValid(apiResponse, dbResultList);
     }
 
+    @Test()
+    public void testFindAllUsersEmptyDataset(){
+
+        LinkedHashMap<String,String> paramsData = new LinkedHashMap<>();
+        FindAllUsersTestHelper helper = new FindAllUsersTestHelper();
+        paramsData.put("page", String.valueOf(helper.dbFetchLastID()/20 + 1));
+        paramsData.put("size", "NA");
+        paramsData.put("sort", "NA");
+        ArrayList<dbResult> dbResultList= helper.fetchDbData(paramsData);
+
+        //Get only required request parameters from available list
+        params = helper.getParamsMap(paramsData);
+
+        //Make API Call and get Response object
+        Response apiResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
+                BaseApi.HTTP_METHOD.GET, headers, params, null);
+
+        //API Response Assertion
+        new FindAllUserAssertion().assertAPIResponseEmptyDataset(apiResponse, dbResultList);
+    }
+
+    //Method to set common headers
     Map<String, String> headersList()
     {
         HashMap<String, String> headers = new HashMap();

@@ -6,8 +6,22 @@
     <test name="Fetch All Users">
         <classes>
             <class name="BaseTest"/>
-            <class name="findalluser.FindAllUsersTest"/>
+<!--            <class name="findalluser.FindAllUsersTest">-->
+<!--                    <methods>-->
+<!--                        <include name="testFindAllUsersValid"/>-->
+<!--                        <include name="testFindAllUsersInValid" />-->
+<!--                    </methods>-->
+<!--            </class>-->
+            <class name="saveuser.SaveUserTest">
+                <methods>
+<!--                    <include name="testSaveUserValid"/>-->
+<!--                    <include name="testSaveUserInvalidFirstName"/>-->
+<!--                    <include name="testSaveUserInvalidLastName"/>-->
+<!--                    <include name="testSaveUserInvalidEmail"/>-->
+                    <include name="testSaveUserInvalidDate"/>
+                </methods>
+            </class>
+
         </classes>
     </test>
-
 </suite>

@@ -9,3 +9,5 @@ sno;testname;page;size;sort
 8;testFindAllUsersValid;1;10;email
 9;testFindAllUsersValid;0;5;dayOfBirth,desc
 10;testFindAllUsersValid;1;10;dayOfBirth,asc
+11;testFindAllUsersValid;0;0;NA
+12;testFindAllUsersValid;0;0;email,desc
