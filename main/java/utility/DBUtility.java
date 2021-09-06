@@ -132,6 +132,26 @@ public class DBUtility {
         return resultList;
     }
 
+    public ArrayList<dbResult> derbyFetchFirstRecord() {
+        connection = derbyGetConnection();
+        ArrayList<dbResult> resultList = new ArrayList();
+        ResultSet resultSet = null;
+        try {
+            Statement statement = connection.createStatement();
+            String sqlFetchData = "SELECT * FROM records";
+            resultSet = statement.executeQuery(sqlFetchData);
+            if (resultSet.next()) {
+                resultList.add(new dbResult(resultSet.getInt("id"), resultSet.getString("firstName"),
+                        resultSet.getString("lastName"), resultSet.getString("email"),
+                        resultSet.getDate("dayOfBirth")));
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultList;
+    }
+
     public int derbyFetchLastID() {
         int recordID = 0;
             connection = derbyGetConnection();

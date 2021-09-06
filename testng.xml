@@ -18,7 +18,8 @@
 <!--                    <include name="testSaveUserInvalidFirstName"/>-->
 <!--                    <include name="testSaveUserInvalidLastName"/>-->
 <!--                    <include name="testSaveUserInvalidEmail"/>-->
-                    <include name="testSaveUserInvalidDate"/>
+<!--                    <include name="testSaveUserInvalidDate"/>-->
+                    <include name="testSaveUserDuplicateEmail"/>
                 </methods>
             </class>
 

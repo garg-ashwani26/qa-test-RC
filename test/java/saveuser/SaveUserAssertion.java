@@ -1,9 +1,11 @@
 package saveuser;
 
+import helper.SaveUserDuplicateEmailHelper;
 import helper.SaveUserHelper;
 import helper.SaveUserValidationFailureHelper;
 import io.restassured.response.Response;
 import model.response.saveuser.SaveUser;
+import model.response.saveuserduplicateemail.SaveUserDuplicateEmail;
 import model.response.saveuservalidationfailure.SaveUserValidationFailure;
 import model.response.saveuservalidationfailure.SubError;
 import org.testng.Assert;
@@ -153,6 +155,26 @@ public class SaveUserAssertion {
             }
             else {
                 Assert.fail("API Status Code Failure : Expected 400");}
+        }
+        else
+        {Assert.fail("Failure in JSON response mapping");}
+        softAssert.assertAll();
+    }
+
+    public void assertAPIResponseDuplicateEmail(Response apiResponse)
+    {
+        SaveUserDuplicateEmailHelper saveUserValidationFailureHelper = new SaveUserDuplicateEmailHelper(apiResponse.asString());
+        SaveUserDuplicateEmail saveUserDuplicateEmailDto = saveUserValidationFailureHelper.getResponseDto();
+        if(saveUserDuplicateEmailDto != null) {
+            if (apiResponse.getStatusCode() == 409) {
+
+                softAssert.assertEquals(saveUserDuplicateEmailDto.getStatus(), "CONFLICT", "Validate status field");
+                System.out.println("Actual Status: " + saveUserDuplicateEmailDto.getStatus() + "\nExpected Status: CONFLICT");
+                softAssert.assertEquals(saveUserDuplicateEmailDto.getMessage(), "Database error", "Validate message field");
+                System.out.println("\nActual Message: " + saveUserDuplicateEmailDto.getMessage() + "\nExpected ID: Database error");
+            }
+            else {
+                Assert.fail("API Status Code Failure : Expected 409");}
         }
         else
         {Assert.fail("Failure in JSON response mapping");}

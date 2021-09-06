@@ -1,15 +1,13 @@
 package saveuser;
 
 import io.restassured.response.Response;
+import model.dbResult;
 import model.request.saveuser.SaveUser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utility.BaseApi;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SaveUserTest {
 
@@ -108,6 +106,27 @@ public class SaveUserTest {
 
         //API Response Assertion
         new SaveUserAssertion().assertAPIResponseInvalidDate(response, requestBodyParams.get("dayOfBirth"));
+    }
+
+    @Test(dataProvider = "SaveUserAPIData", dataProviderClass = SaveUserDataProvider.class)
+    public void testSaveUserDuplicateEmail(LinkedHashMap<String, String> requestBodyParams){
+
+        //Fetch First Record from Derby Database
+        SaveUserTestHelper saveUserTestHelper = new SaveUserTestHelper();
+        ArrayList<dbResult> firstRecord= saveUserTestHelper.fetchFirstRecord();
+
+        //Replace email of the test data with first record
+        requestBodyParams.replace("email",firstRecord.get(0).getEmail());
+
+        //Create Request Body Payload
+        SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
+
+        //Make API Call and get Response object
+        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+                params, saveUserRequestDto);
+
+        //API Response Assertion
+        new SaveUserAssertion().assertAPIResponseDuplicateEmail(response);
     }
 
     //Method to set common headers

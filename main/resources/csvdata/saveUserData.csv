@@ -18,3 +18,4 @@ sno;testname;firstName;lastName;email;dayOfBirth
 17;testSaveUserInvalidEmail;test;user;test17email;2001-01-17
 18;testSaveUserInvalidDate;test;user;test18@email.com;2022-01-17
 19;testSaveUserInvalidDate;test;user;test19@email.com;getCurrentDate
+20;testSaveUserDuplicateEmail;test;user;provideDuplicateEmail;2001-01-20
