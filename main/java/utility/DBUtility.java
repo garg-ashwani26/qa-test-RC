@@ -167,4 +167,19 @@ public class DBUtility {
             }
         return recordID;
     }
+
+    public void derbyDeleteRow(int ID) {
+        connection = derbyGetConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String sqlDeleteData = "DELETE FROM records where id = " + ID;
+            int row = statement.executeUpdate(sqlDeleteData);
+            if (row > 0) {
+                System.out.println("Record ID " + ID + " has been deleted from Records Table");
+            }
+            connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+        }
+    }
 }

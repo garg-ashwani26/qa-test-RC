@@ -12,14 +12,21 @@
 <!--                        <include name="testFindAllUsersInValid" />-->
 <!--                    </methods>-->
 <!--            </class>-->
-            <class name="saveuser.SaveUserTest">
-                <methods>
+<!--            <class name="saveuser.SaveUserTest">-->
+<!--                <methods>-->
 <!--                    <include name="testSaveUserValid"/>-->
 <!--                    <include name="testSaveUserInvalidFirstName"/>-->
 <!--                    <include name="testSaveUserInvalidLastName"/>-->
 <!--                    <include name="testSaveUserInvalidEmail"/>-->
 <!--                    <include name="testSaveUserInvalidDate"/>-->
-                    <include name="testSaveUserDuplicateEmail"/>
+<!--                    <include name="testSaveUserDuplicateEmail"/>-->
+<!--                </methods>-->
+<!--            </class>-->
+            <class name="deleteuser.DeleteUserTest">
+                <methods>
+                    <include name="testDeleteUserValid"/>
+                    <include name="testDeleteUserInvalid" />
+                    <include name="testDeleteUserMissingRequiredParam"/>
                 </methods>
             </class>
 

@@ -10,12 +10,6 @@ import java.util.*;
 
 public class FindAllUsersTestHelper {
 
-    public Response apiInvokeAndValidate(String basePath, BaseApi.HTTP_METHOD httpMethod, Map<String, String> headers,
-                                             Map<String, String> params, Object requestDTO)
-    {
-        return ApiHelperUtil.invokeApi(basePath, httpMethod, headers, params, requestDTO);
-    }
-
     ArrayList<dbResult> fetchDBData()
     {
         return new DBUtility().derbyFetchData();

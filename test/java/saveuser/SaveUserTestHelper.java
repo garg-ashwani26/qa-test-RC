@@ -13,12 +13,6 @@ import java.util.Map;
 
 public class SaveUserTestHelper {
 
-    public Response apiInvokeAndValidate(String basePath, BaseApi.HTTP_METHOD httpMethod, Map<String, String> headers,
-                                     Map<String, String> params, Object requestDTO)
-    {
-        return ApiHelperUtil.invokeApi(basePath, httpMethod, headers, params, requestDTO);
-    }
-
     public int saveUserData(LinkedHashMap<String, String> params)
     {
         return new DBUtility().derbyInsertDataWithoutID(params);

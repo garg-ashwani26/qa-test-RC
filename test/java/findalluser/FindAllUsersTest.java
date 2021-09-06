@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import model.dbResult;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utility.ApiHelperUtil;
 import utility.BaseApi;
 import java.util.*;
 
@@ -30,7 +31,7 @@ public class FindAllUsersTest {
         params = helper.getParamsMap(paramsData);
 
         //Make API Call and get Response object
-         Response apiResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
+         Response apiResponse = ApiHelperUtil.invokeApi(basePath,
                 BaseApi.HTTP_METHOD.GET, headers, params, null);
 
         //API Response Assertion
@@ -51,7 +52,7 @@ public class FindAllUsersTest {
         params = helper.getParamsMap(paramsData);
 
         //Make API Call and get Response object
-        Response apiResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
+        Response apiResponse = ApiHelperUtil.invokeApi(basePath,
                 BaseApi.HTTP_METHOD.GET, headers, params, null);
 
         //API Response Assertion

@@ -5,6 +5,7 @@ import model.dbResult;
 import model.request.saveuser.SaveUser;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utility.ApiHelperUtil;
 import utility.BaseApi;
 
 import java.util.*;
@@ -33,7 +34,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
@@ -49,7 +50,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
@@ -65,7 +66,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
@@ -81,7 +82,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
@@ -101,7 +102,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
@@ -122,7 +123,7 @@ public class SaveUserTest {
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
 
         //Make API Call and get Response object
-        Response response = new SaveUserTestHelper().apiInvokeAndValidate(basePath, BaseApi.HTTP_METHOD.POST, headers,
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
         //API Response Assertion
