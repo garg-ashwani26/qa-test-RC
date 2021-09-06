@@ -1,15 +1,11 @@
 package saveuser;
 
-import io.restassured.response.Response;
 import model.dbResult;
 import model.request.saveuser.SaveUser;
-import utility.ApiHelperUtil;
-import utility.BaseApi;
 import utility.DBUtility;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class SaveUserTestHelper {
 

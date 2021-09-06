@@ -26,8 +26,8 @@ public class DBUtility {
         connection = derbyGetConnection();
         try {
             String sqlCreateDBTable = "CREATE TABLE records(id int," +
-                    "firstName varchar(15)," +
-                    "lastName varchar(30)," +
+                    "firstName varchar(31) CHECK(LENGTH(firstName)>1 AND LENGTH(firstname)<=30)," +
+                    "lastName varchar(16) CHECK(LENGTH(lastName)>1 and LENGTH(lastName)<=15)," +
                     "email varchar(100) UNIQUE," +
                     "dayOfBirth DATE)";
 
@@ -72,16 +72,20 @@ public class DBUtility {
                 ResultSet resultSet = statement.executeQuery(sqlGetLastID);
                 resultSet.next();
                 int lastID = resultSet.getInt(1);
-                    String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
-                            "values(" + (lastID + 1) + ",'" +
-                            dataMap.get("firstName") + "','" + dataMap.get("lastName") + "','" +
-                            dataMap.get("email") + "','" + dataMap.get("dayOfBirth") + "')";
-                    int row = statement.executeUpdate(sqlInsertData);
-                    if (row > 0) {
-                        System.out.println("A record has been created in Records Table");
-                        recordID = lastID + 1;
-                        lastID++;
-                    }
+                String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
+                        "values(" + (lastID + 1) + ",'" +
+                        dataMap.get("firstName") + "','" + dataMap.get("lastName") + "','" +
+                        dataMap.get("email") + "','" + dataMap.get("dayOfBirth") + "')";
+                int row = statement.executeUpdate(sqlInsertData);
+                if (row > 0) {
+                    System.out.println("A record has been created in Records Table");
+                    recordID = lastID + 1;
+                    lastID++;
+                }
+                else
+                {
+                    System.out.println("Record entry skipped as provided date is greater than or equal to current date");
+                }
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();

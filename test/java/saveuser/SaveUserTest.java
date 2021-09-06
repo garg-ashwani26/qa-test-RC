@@ -8,7 +8,10 @@ import org.testng.annotations.Test;
 import utility.ApiHelperUtil;
 import utility.BaseApi;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class SaveUserTest {
 
@@ -26,9 +29,7 @@ public class SaveUserTest {
     @Test(dataProvider = "SaveUserAPIData", dataProviderClass = SaveUserDataProvider.class)
     public void testSaveUserValid(LinkedHashMap<String, String> requestBodyParams){
 
-        //Save Record in Derby Database
         SaveUserTestHelper saveUserTestHelper = new SaveUserTestHelper();
-        int recordID = saveUserTestHelper.saveUserData(requestBodyParams);
 
         //Create Request Body Payload
         SaveUser saveUserRequestDto = saveUserTestHelper.createRequestDto(requestBodyParams);
@@ -38,7 +39,10 @@ public class SaveUserTest {
                 params, saveUserRequestDto);
 
         //API Response Assertion
-        new SaveUserAssertion().assertAPIResponseValid(response, requestBodyParams, recordID);
+        new SaveUserAssertion().assertAPIResponseValid(response, requestBodyParams);
+
+        //Save Record in Derby Database
+        saveUserTestHelper.saveUserData(requestBodyParams);
     }
 
     @Test(dataProvider = "SaveUserAPIData", dataProviderClass = SaveUserDataProvider.class)

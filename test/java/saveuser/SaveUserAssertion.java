@@ -11,8 +11,6 @@ import model.response.saveuservalidationfailure.SubError;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -20,14 +18,12 @@ public class SaveUserAssertion {
 
     SoftAssert softAssert = new SoftAssert();
 
-    public void assertAPIResponseValid(Response apiResponse, LinkedHashMap<String, String> params, int recordID)
+    public void assertAPIResponseValid(Response apiResponse, LinkedHashMap<String, String> params)
     {
         SaveUserHelper saveUserHelper = new SaveUserHelper(apiResponse.asString());
         SaveUser saveUserDto = saveUserHelper.getResponseDto();
         if(saveUserDto != null) {
             if (apiResponse.getStatusCode() == 201) {
-
-                softAssert.assertEquals(saveUserDto.getId(), recordID, "Validate ID field");
                 softAssert.assertEquals(saveUserDto.getFirstName(), params.get("firstName"), "Validate firstName field");
                 softAssert.assertEquals(saveUserDto.getLastName(), params.get("lastName"), "Validate lastName field");
                 softAssert.assertEquals(saveUserDto.getEmail(), params.get("email"), "Validate email field");

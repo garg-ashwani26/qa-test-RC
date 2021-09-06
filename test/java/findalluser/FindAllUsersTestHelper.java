@@ -1,9 +1,6 @@
 package findalluser;
 
-import io.restassured.response.Response;
 import model.dbResult;
-import utility.ApiHelperUtil;
-import utility.BaseApi;
 import utility.DBUtility;
 
 import java.util.*;
