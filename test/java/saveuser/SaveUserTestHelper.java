@@ -9,9 +9,10 @@ import java.util.LinkedHashMap;
 
 public class SaveUserTestHelper {
 
-    public int saveUserData(LinkedHashMap<String, String> params)
+    public void saveUserData(LinkedHashMap<String,String> params)
     {
-        return new DBUtility().derbyInsertDataWithoutID(params);
+//        return new DBUtility().derbyInsertDataWithoutID(params);
+        new DBUtility().derbyInsertData(params);
     }
 
     public ArrayList<dbResult> fetchFirstRecord()

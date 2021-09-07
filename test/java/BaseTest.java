@@ -20,16 +20,27 @@ public class BaseTest {
 
         //delete existing derby database record
         deleteDirectory(new File (System.getProperty("user.dir") + File.separator + "ringcentral"));
-        HashMap<String, String> headers = new HashMap();
-        headers.put("content-type", "application/json");
-        HashMap<String, String> params = new HashMap();
-        String basePath = "/api/users";
-//        FindAllUsers findAllUsersResponse = new FindAllUsersTestHelper().apiInvokeAndValidate(basePath,
-//                BaseApi.HTTP_METHOD.GET, headers, params, null);
-        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.GET, headers, params, null);
-        FindAllUsersHelper helper = new FindAllUsersHelper(response.asString());
-        FindAllUsers findAllUsersResponse =  helper.getResponseDto();
 
+        //Counter initialized to fetch initial 20 records
+        int pageCounter = 0;
+        FindAllUsers findAllUsersResponse = fetchDataFromFindAllUser(pageCounter);
+
+        //Data fetched from API response and stored in class list variable
+        createDataList(findAllUsersResponse);
+
+        //Call to additional pages if exists and add additional data to class list variable
+        while(++pageCounter < findAllUsersResponse.getPage().getTotalPages())
+        {
+            findAllUsersResponse = fetchDataFromFindAllUser(pageCounter);
+            createDataList(findAllUsersResponse);
+        }
+
+        dbUtility.derbyCreateTable();
+        dbUtility.derbyInsertDataList(listOfDataRows);
+    }
+
+    void createDataList(FindAllUsers findAllUsersResponse)
+    {
         for(Content content : findAllUsersResponse.getContent())
         {
             LinkedHashMap<String,String> recordMap = new LinkedHashMap<>();
@@ -40,8 +51,24 @@ public class BaseTest {
             recordMap.put("dayOfBirth", content.getDayOfBirth());
             listOfDataRows.add(recordMap);
         }
-        dbUtility.derbyCreateTable();
-        dbUtility.derbyInsertData(listOfDataRows);
+    }
+
+    FindAllUsers fetchDataFromFindAllUser(int Page)
+    {
+        //Set headers
+        HashMap<String, String> headers = new HashMap();
+        headers.put("content-type", "application/json");
+
+        //Set URL Parameters
+        HashMap<String, String> params = new HashMap();
+        params.put("page",String.valueOf(Page));
+
+        String basePath = "/api/users";
+
+        //API Call to fetch default 20 records based on given Page number
+        Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.GET, headers, params, null);
+        FindAllUsersHelper helper = new FindAllUsersHelper(response.asString());
+        return  helper.getResponseDto();
     }
 
     boolean deleteDirectory(File directoryToBeDeleted) {

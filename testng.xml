@@ -3,7 +3,7 @@
 
 <suite name="QA Test RingCentral">
 
-    <test name="Fetch All Users">
+    <test name="Validate Listed APIs">
         <classes>
             <class name="BaseTest"/>
             <class name="findalluser.FindAllUsersTest">

@@ -40,21 +40,48 @@ public class DBUtility {
         }
     }
 
-    public void derbyInsertData(List<LinkedHashMap<String, String>> dataList) {
-        if (!dataList.isEmpty()) {
+    public void derbyInsertData(LinkedHashMap<String, String> dataMap) {
+        if (!dataMap.isEmpty()) {
             connection = derbyGetConnection();
             try {
                 Statement statement = connection.createStatement();
-                for (Map<String, String> singleRecord : dataList) {
-                    String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
-                            "values(" + singleRecord.get("id") + ",'" +
-                            singleRecord.get("firstName") + "','" + singleRecord.get("lastName") + "','" +
-                            singleRecord.get("email") + "','" + singleRecord.get("dayOfBirth") + "')";
-                    int row = statement.executeUpdate(sqlInsertData);
-                    if (row > 0) {
-                        System.out.println("A record has been created in Records Table");
-                    }
+                String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
+                        "values(" + dataMap.get("id") + ",'" +
+                        dataMap.get("firstName") + "','" + dataMap.get("lastName") + "','" +
+                        dataMap.get("email") + "','" + dataMap.get("dayOfBirth") + "')";
+                int row = statement.executeUpdate(sqlInsertData);
+                if (row > 0) {
+                    System.out.println("A record has been created in Records Table");
                 }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void derbyInsertData(LinkedHashMap<String, String> dataMap, Connection connection) throws SQLException {
+        if (!dataMap.isEmpty()) {
+            Statement statement = connection.createStatement();
+            String sqlInsertData = "INSERT INTO records(id,firstName,lastName,email,dayOfBirth) " +
+                    "values(" + dataMap.get("id") + ",'" +
+                    dataMap.get("firstName") + "','" + dataMap.get("lastName") + "','" +
+                    dataMap.get("email") + "','" + dataMap.get("dayOfBirth") + "')";
+            int row = statement.executeUpdate(sqlInsertData);
+            if (row > 0) {
+                System.out.println("A record has been created in Records Table");
+            }
+        }
+    }
+
+    public void derbyInsertDataList(List<LinkedHashMap<String, String>> dataList) {
+        if (!dataList.isEmpty()) {
+            connection = derbyGetConnection();
+            try {
+                System.out.println("Number of records to be pushed in derby database: "+ dataList.size());
+                for (LinkedHashMap<String, String> singleRecord : dataList) {
+                    derbyInsertData(singleRecord, connection);
+            }
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -68,7 +95,7 @@ public class DBUtility {
             connection = derbyGetConnection();
             try {
                 Statement statement = connection.createStatement();
-                String sqlGetLastID = "SELECT max(id) from records";
+                String sqlGetLastID = "SELECT MAX(id) from records";
                 ResultSet resultSet = statement.executeQuery(sqlGetLastID);
                 resultSet.next();
                 int lastID = resultSet.getInt(1);
@@ -161,7 +188,7 @@ public class DBUtility {
             connection = derbyGetConnection();
             try {
                 Statement statement = connection.createStatement();
-                String sqlGetLastID = "SELECT max(id) from records";
+                String sqlGetLastID = "SELECT MAX(id) from records";
                 ResultSet resultSet = statement.executeQuery(sqlGetLastID);
                 resultSet.next();
                 recordID = resultSet.getInt(1);

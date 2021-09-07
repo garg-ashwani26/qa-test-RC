@@ -24,10 +24,16 @@ public class SaveUserAssertion {
         SaveUser saveUserDto = saveUserHelper.getResponseDto();
         if(saveUserDto != null) {
             if (apiResponse.getStatusCode() == 201) {
+                softAssert.assertEquals(saveUserDto.getId(), Integer.parseInt(params.get("id")), "Validate id field");
+                System.out.println("Actual ID: " + saveUserDto.getId() + "\nExpected ID: " + params.get("id"));
                 softAssert.assertEquals(saveUserDto.getFirstName(), params.get("firstName"), "Validate firstName field");
+                System.out.println("Actual firstName: " + saveUserDto.getFirstName() + "\nExpected firstName: " + params.get("firstName"));
                 softAssert.assertEquals(saveUserDto.getLastName(), params.get("lastName"), "Validate lastName field");
+                System.out.println("Actual lastName: " + saveUserDto.getLastName() + "\nExpected lastName: " + params.get("lastName"));
                 softAssert.assertEquals(saveUserDto.getEmail(), params.get("email"), "Validate email field");
+                System.out.println("Actual email: " + saveUserDto.getEmail() + "\nExpected email : " + params.get("email"));
                 softAssert.assertEquals(saveUserDto.getDayOfBirth(), params.get("dayOfBirth"), "Validate dayOfBirth field");
+                System.out.println("Actual dayOfBirth: " + saveUserDto.getDayOfBirth() + "\nExpected dayOfBirth: " + params.get("dayOfBirth"));
             }
             else {
                 Assert.fail("API Status Code Failure : Expected 201");}

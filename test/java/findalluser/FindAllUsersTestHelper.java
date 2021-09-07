@@ -32,13 +32,16 @@ public class FindAllUsersTestHelper {
         String whereCondition = "";
 
         String offsetCondition = params.get("page").equals("0") && params.get("size").equals("0") ?
-                " OFFSET 0 ROWS" : params.get("page").equals("0") && !params.get("size").equals("NA") ?
+                " FETCH FIRST 20 ROWS ONLY" : params.get("page").equals("0") && !params.get("size").equals("NA") ?
                 " OFFSET 0 ROWS" : params.get("page").equals("0") && params.get("size").equals("NA") ?
-                " OFFSET 0 ROWS" : !params.get("page").equals("NA") && !params.get("size").equals("NA") ?
+                " FETCH FIRST 20 ROWS ONLY" : !params.get("page").equals("NA") && params.get("size").equals("0") ?
+                " OFFSET " + (Integer.parseInt(params.get("page")) * 20 + 1) + " ROWS FETCH FIRST 20 ROWS ONLY":
+                !params.get("page").equals("NA") && !params.get("size").equals("NA") ?
                 " OFFSET " + Integer.parseInt(params.get("page"))*Integer.parseInt(params.get("size")) + " ROWS" :
                 !params.get("page").equals("NA") && params.get("size").equals("NA") ?
-                " OFFSET " + (Integer.parseInt(params.get("page")) * 20 + 1) + " ROWS":
-                        params.get("page").equals("NA") && !params.get("size").equals("NA") ? " OFFSET 0 ROWS" : null;
+                " OFFSET " + (Integer.parseInt(params.get("page")) * 20 + 1) + " ROWS FETCH FIRST 20 ROWS ONLY":
+                        params.get("page").equals("NA") && !params.get("size").equals("NA") ? " OFFSET 0 ROWS" :
+                                " FETCH FIRST 20 ROWS ONLY";
 
         String sizeCondition = params.get("page").equals("0") && params.get("size").equals("0") ?
                 null : !params.get("size").equals("NA") ? " FETCH NEXT " + params.get("size") + " ROWS ONLY"

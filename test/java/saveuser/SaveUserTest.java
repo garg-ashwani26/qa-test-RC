@@ -38,11 +38,14 @@ public class SaveUserTest {
         Response response = ApiHelperUtil.invokeApi(basePath, BaseApi.HTTP_METHOD.POST, headers,
                 params, saveUserRequestDto);
 
+        //Save Record in Derby Database
+        if(response.getStatusCode() == 201) {
+            requestBodyParams.put("id", String.valueOf(response.jsonPath().getInt("id")));
+            saveUserTestHelper.saveUserData(requestBodyParams);
+        }
+
         //API Response Assertion
         new SaveUserAssertion().assertAPIResponseValid(response, requestBodyParams);
-
-        //Save Record in Derby Database
-        saveUserTestHelper.saveUserData(requestBodyParams);
     }
 
     @Test(dataProvider = "SaveUserAPIData", dataProviderClass = SaveUserDataProvider.class)

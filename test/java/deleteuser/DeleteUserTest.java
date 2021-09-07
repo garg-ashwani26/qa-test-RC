@@ -34,9 +34,6 @@ public class DeleteUserTest {
         //Get only required request parameters from available list
         int RecordId = firstRecord.get(0).getId();
 
-        //Delete record from derby database to keep it consistent with API data reference
-        deleteUserTestHelper.dbDeleteRow(RecordId);
-
         //Set ID to the end of the request URL
         String localBasePath = basePath + "/" + RecordId;
 
@@ -47,6 +44,11 @@ public class DeleteUserTest {
         //Make Get User By ID API call to validate if user is deleted!
         Response apiResponseGetUserByID = ApiHelperUtil.invokeApi(localBasePath, BaseApi.HTTP_METHOD.GET,
                 headers, params, null);
+
+        //Delete record from derby database to keep it consistent with API data reference
+        if (apiResponse.getStatusCode() == 204 && apiResponseGetUserByID.getStatusCode() == 404){
+            deleteUserTestHelper.dbDeleteRow(RecordId);
+        }
 
         //API Response Assertion
         new DeleteUserAssertion().assertAPIResponseValid(apiResponse, RecordId, apiResponseGetUserByID);
