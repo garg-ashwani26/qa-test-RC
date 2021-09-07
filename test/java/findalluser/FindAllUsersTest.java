@@ -6,7 +6,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utility.ApiHelperUtil;
 import utility.BaseApi;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FindAllUsersTest {
 

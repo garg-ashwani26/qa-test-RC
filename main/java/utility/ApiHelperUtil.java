@@ -1,9 +1,10 @@
 package utility;
 
-import java.util.Map;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.springframework.util.CollectionUtils;
+
+import java.util.Map;
 
 public class ApiHelperUtil {
 
